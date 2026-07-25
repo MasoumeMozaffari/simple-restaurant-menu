@@ -134,3 +134,8 @@ function display_restaurant_menu() {
     return ob_get_clean();
 }
 add_shortcode('simple_menu', 'display_restaurant_menu');
+function register_restaurant_menu_widget($widgets_manager) {
+    require_once __DIR__ . '/widget-restaurant-menu.php';
+    $widgets_manager->register(new \Restaurant_Menu_Widget());
+}
+add_action('elementor/widgets/register', 'register_restaurant_menu_widget');
