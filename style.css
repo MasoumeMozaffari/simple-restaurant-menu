@@ -1,0 +1,120 @@
+:root {
+    --main-color: #b8860b;
+    --dark-color: #1a1a1a;
+    --breakfast-color: #e67e22;
+    --main-dish-color: #c0392b;
+    --drink-color: #2980b9;
+}
+
+h1 {
+    color: var(--main-color);
+}
+body {
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fdfaf5;
+}
+h2 {
+border-bottom: 2px solid var(--main-color) ;
+padding-bottom: 8px;
+margin-top: 40px;
+}
+.item {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+.item img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.item {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.item {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s;
+}
+
+.item:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 500px) {
+  body {
+    padding: 10px;
+  }
+  .item img {
+    width: 60px;
+    height: 60px;
+  }
+}
+.subtitle {
+  font-size: 32px;
+  color: #666;
+}
+.item-details {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.price {
+  font-weight: bold;
+  color: var(--main-color);
+  white-space: nowrap;
+}
+.cat-breakfast {
+  border-bottom-color: var(--breakfast-color);
+  color: var(--breakfast-color);
+}
+
+.cat-main-dish {
+  border-bottom-color: var(--main-dish-color);
+  color: var(--main-dish-color);
+}
+
+.cat-drink {
+  border-bottom-color: var(--drink-color);
+  color: var(--drink-color);
+}
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  margin-top: 6px;
+  margin-left: 4px;
+}
+
+.badge-vegetarian {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.badge-nuts {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.badge-dairy {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.badge-gluten_free {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.badge-spicy {
+  background-color: #ffebee;
+  color: #c62828;
+}

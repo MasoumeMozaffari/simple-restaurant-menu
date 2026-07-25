@@ -52,12 +52,85 @@ function create_menu_item_fields() {
 
             Field::make('set', 'menu_item_badges', 'نشان‌های رژیمی')
                 ->add_options(array(
-                    'vegetarian' => 'گیاهی',
+                    'vegetarian'  => 'گیاهی',
                     'nuts'        => 'حاوی آجیل',
                     'dairy'       => 'حاوی لبنیات',
                     'spicy'       => 'تند',
-                    'glutenfree'  => 'بدون گلوتن',
+                    'gluten_free' => 'بدون گلوتن',
                 )),
         ));
 }
 add_action('carbon_fields_register_fields', 'create_menu_item_fields');
+
+function load_menu_styles() {
+    wp_enqueue_style('simple-restaurant-menu-font', 'https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
+    wp_enqueue_style('simple-restaurant-menu-style', plugins_url('style.css', __FILE__));
+}
+add_action('wp_enqueue_scripts', 'load_menu_styles');
+
+function display_restaurant_menu() {
+    ob_start();
+
+    $badge_labels = array(
+        'vegetarian'  => 'گیاهی',
+        'gluten_free' => 'بدون گلوتن',
+        'nuts'        => 'حاوی آجیل',
+        'dairy'       => 'حاوی لبنیات',
+        'spicy'       => 'تند',
+    );
+
+    $sections = get_terms(array(
+        'taxonomy' => 'menu_section',
+        'hide_empty' => false,
+    ));
+
+    echo '<h1>رستوران فرشته</h1>';
+    echo '<p class="subtitle">منو امروز</p>';
+
+    foreach ($sections as $section) {
+        echo '<h2 class="cat-' . esc_attr($section->slug) . '">' . esc_html($section->name) . '</h2>';
+
+        $items_query = new WP_Query(array(
+            'post_type' => 'menu_item',
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'menu_section',
+                    'field' => 'slug',
+                    'terms' => $section->slug,
+                ),
+            ),
+        ));
+
+        if ($items_query->have_posts()) {
+            while ($items_query->have_posts()) {
+                $items_query->the_post();
+
+                $price = carbon_get_post_meta(get_the_ID(), 'menu_item_price');
+                $badges = carbon_get_post_meta(get_the_ID(), 'menu_item_badges');
+
+                echo '<div class="item">';
+                if (has_post_thumbnail()) {
+                    the_post_thumbnail('thumbnail');
+                }
+                echo '<div class="item-details">';
+                echo '<div>';
+                echo '<h3>' . esc_html(get_the_title()) . '</h3>';
+                echo '<p>' . esc_html(get_the_excerpt()) . '</p>';
+
+                foreach ($badges as $badge) {
+                    $badge_label = isset($badge_labels[$badge]) ? $badge_labels[$badge] : $badge;
+                    echo '<span class="badge badge-' . esc_attr($badge) . '">' . esc_html($badge_label) . '</span>';
+                }
+
+                echo '</div>';
+                echo '<p class="price">' . esc_html($price) . ' تومان</p>';
+                echo '</div>';
+                echo '</div>';
+            }
+            wp_reset_postdata();
+        }
+    }
+
+    return ob_get_clean();
+}
+add_shortcode('simple_menu', 'display_restaurant_menu');
