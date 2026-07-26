@@ -62,6 +62,17 @@ function create_menu_item_fields() {
 }
 add_action('carbon_fields_register_fields', 'create_menu_item_fields');
 
+function create_menu_color_settings() {
+    Container::make('theme_options', 'تنظیمات رنگ منو')
+        ->add_fields(array(
+            Field::make('color', 'menu_main_color', 'رنگ اصلی')->set_default_value('#b8860b'),
+            Field::make('color', 'menu_breakfast_color', 'رنگ صبحانه')->set_default_value('#e67e22'),
+            Field::make('color', 'menu_main_dish_color', 'رنگ غذای اصلی')->set_default_value('#c0392b'),
+            Field::make('color', 'menu_drink_color', 'رنگ نوشیدنی')->set_default_value('#2980b9'),
+        ));
+}
+add_action('carbon_fields_register_fields', 'create_menu_color_settings');
+
 function load_menu_styles() {
     wp_enqueue_style('simple-restaurant-menu-font', 'https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap');
     wp_enqueue_style('simple-restaurant-menu-style', plugins_url('style.css', __FILE__));
@@ -70,6 +81,20 @@ add_action('wp_enqueue_scripts', 'load_menu_styles');
 
 function display_restaurant_menu() {
     ob_start();
+    $main_color = carbon_get_theme_option('menu_main_color');
+    $breakfast_color = carbon_get_theme_option('menu_breakfast_color');
+    $main_dish_color = carbon_get_theme_option('menu_main_dish_color');
+    $drink_color = carbon_get_theme_option('menu_drink_color');
+
+    echo '<style>
+        .simple-menu-wrapper h1 { color: ' . esc_attr($main_color) . '; }
+        .simple-menu-wrapper .price { color: ' . esc_attr($main_color) . '; }
+        .simple-menu-wrapper .cat-breakfast { color: ' . esc_attr($breakfast_color) . '; border-bottom-color: ' . esc_attr($breakfast_color) . '; }
+        .simple-menu-wrapper .cat-main-dish { color: ' . esc_attr($main_dish_color) . '; border-bottom-color: ' . esc_attr($main_dish_color) . '; }
+        .simple-menu-wrapper .cat-drink { color: ' . esc_attr($drink_color) . '; border-bottom-color: ' . esc_attr($drink_color) . '; }
+    </style>';
+
+    echo '<div class="simple-menu-wrapper">';
 
     $badge_labels = array(
         'vegetarian'  => 'گیاهی',
@@ -131,9 +156,11 @@ function display_restaurant_menu() {
         }
     }
 
+    echo '</div>';
     return ob_get_clean();
 }
 add_shortcode('simple_menu', 'display_restaurant_menu');
+
 function register_restaurant_menu_widget($widgets_manager) {
     require_once __DIR__ . '/widget-restaurant-menu.php';
     $widgets_manager->register(new \Restaurant_Menu_Widget());
