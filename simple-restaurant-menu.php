@@ -73,7 +73,7 @@ function create_menu_color_settings() {
             Field::make('color', 'menu_main_dish_color', 'رنگ غذای اصلی')->set_default_value('#c0392b'),
             Field::make('color', 'menu_drink_color', 'رنگ نوشیدنی')->set_default_value('#2980b9'),
             Field::make('text', 'menu_order_text', 'متن دکمه سفارش')->set_default_value('سفارش'),
-            Field::make('image', 'menu_background_image', 'تصویر پس‌زمینه (اختیاری)'),
+            Field::make('color', 'menu_background_color', 'رنگ پس‌زمینه')->set_default_value('#fdfaf5'),
         ));
 }
 add_action('carbon_fields_register_fields', 'create_menu_color_settings');
@@ -97,21 +97,16 @@ function display_restaurant_menu() {
     $main_dish_color = carbon_get_theme_option('menu_main_dish_color');
     $drink_color = carbon_get_theme_option('menu_drink_color');
     $order_text = carbon_get_theme_option('menu_order_text');
-    $bg_image_id = carbon_get_theme_option('menu_background_image');
-    $bg_image_url = !empty($bg_image_id) ? wp_get_attachment_url($bg_image_id) : '';
+    $bg_color = carbon_get_theme_option('menu_background_color');
 
     echo '<style>
+        .simple-menu-wrapper { background-color: ' . esc_attr($bg_color) . '; }
         .simple-menu-wrapper .price { color: ' . esc_attr($main_color) . '; }
         .simple-menu-wrapper .cat-breakfast { color: ' . esc_attr($breakfast_color) . '; border-bottom-color: ' . esc_attr($breakfast_color) . '; }
         .simple-menu-wrapper .cat-main-dish { color: ' . esc_attr($main_dish_color) . '; border-bottom-color: ' . esc_attr($main_dish_color) . '; }
         .simple-menu-wrapper .cat-drink { color: ' . esc_attr($drink_color) . '; border-bottom-color: ' . esc_attr($drink_color) . '; }
-        .simple-menu-wrapper .item-order-btn { background-color: ' . esc_attr($main_color) . '; }';
-
-    if (!empty($bg_image_url)) {
-        echo '.simple-menu-wrapper { background-image: url(' . esc_url($bg_image_url) . '); background-size: cover; background-position: center; background-attachment: fixed; }';
-    }
-
-    echo '</style>';
+        .simple-menu-wrapper .item-order-btn { background-color: ' . esc_attr($main_color) . '; }
+    </style>';
 
     echo '<div class="simple-menu-wrapper">';
 
