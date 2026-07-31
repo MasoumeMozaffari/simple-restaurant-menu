@@ -175,16 +175,18 @@ function display_restaurant_menu() {
 
                 echo '</div>';
 
-                echo '<div class="price-order">';
-                if ($has_discount) {
-                    echo '<span class="discount-badge">' . esc_html(convert_to_persian_digits($discount_percent)) . '٪</span>';
-                    echo '<p class="original-price">' . esc_html(convert_to_persian_digits($price)) . '</p>';
-                }
-                echo '<p class="price">' . esc_html(convert_to_persian_digits($final_price)) . ' تومان</p>';
-                if (!empty($item_order_url)) {
-                    echo '<a href="' . esc_url($item_order_url) . '" target="_blank" class="item-order-btn">' . esc_html($order_text) . '</a>';
-                }
-                echo '</div>';
+               echo '<div class="price-order">';
+echo '<div class="price-order-top">';
+if ($has_discount) {
+    echo '<span class="discount-badge">' . esc_html(convert_to_persian_digits($discount_percent)) . '٪</span>';
+    echo '<p class="original-price">' . esc_html(convert_to_persian_digits($price)) . '</p>';
+}
+echo '<p class="price">' . esc_html(convert_to_persian_digits($final_price)) . ' تومان</p>';
+echo '</div>';
+if (!empty($item_order_url)) {
+    echo '<a href="' . esc_url($item_order_url) . '" target="_blank" class="item-order-btn">' . esc_html($order_text) . '</a>';
+}
+echo '</div>';
 
                 echo '</div>';
                 echo '</div>';
