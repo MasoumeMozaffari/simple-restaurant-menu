@@ -114,7 +114,9 @@ function display_restaurant_menu() {
         'taxonomy' => 'menu_section',
         'hide_empty' => false,
     ));
-
+    echo '<div class="menu-search-box">
+    <input type="text" id="menu-search" placeholder="🔍 جستجو در منو...">
+</div>';
     echo '<div class="cat-filters">';
     echo '<button class="filter-btn active" data-filter="all">همه</button>';
     foreach ($sections as $s) {

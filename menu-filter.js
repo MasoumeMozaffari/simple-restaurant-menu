@@ -1,24 +1,62 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var buttons = document.querySelectorAll('.filter-btn');
-    var items = document.querySelectorAll('.item');
+document.addEventListener('DOMContentLoaded', function () {
+
+    const buttons = document.querySelectorAll('.filter-btn');
+    const items = document.querySelectorAll('.item');
+    const searchInput = document.getElementById('menu-search');
+
+    let currentFilter = 'all';
+
+    function filterItems() {
+
+        const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
+
+        items.forEach(function(item) {
+
+            const category = item.getAttribute('data-category');
+            const title = item.querySelector('h3').textContent.toLowerCase();
+            const description = item.querySelector('.item-info p').textContent.toLowerCase();
+
+            const matchCategory =
+                currentFilter === 'all' || currentFilter === category;
+
+            const matchSearch =
+                title.includes(searchText) ||
+                description.includes(searchText);
+
+            if (matchCategory && matchSearch) {
+                item.style.display = 'flex';
+            } else {
+                item.style.display = 'none';
+            }
+
+        });
+
+    }
 
     buttons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var filter = button.getAttribute('data-filter');
 
-            buttons.forEach(function(b) {
-                b.classList.remove('active');
+        button.addEventListener('click', function() {
+
+            buttons.forEach(function(btn) {
+                btn.classList.remove('active');
             });
+
             button.classList.add('active');
 
-            items.forEach(function(item) {
-                var category = item.getAttribute('data-category');
-                if (filter === 'all' || filter === category) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
+            currentFilter = button.dataset.filter;
+
+            filterItems();
+
         });
+
     });
+
+    if (searchInput) {
+
+        searchInput.addEventListener('keyup', function() {
+            filterItems();
+        });
+
+    }
+
 });
