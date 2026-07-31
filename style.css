@@ -88,6 +88,10 @@
   overflow-wrap: break-word;
   word-break: break-word;
 }
+.simple-menu-wrapper .item-info h3 a {
+  text-decoration: none;
+  color: inherit;
+}
 .simple-menu-wrapper .item-info p {
   font-weight: 300;
   font-size: 13px;
@@ -149,6 +153,9 @@
   white-space: nowrap;
   margin-top: 8px;
 }
+.item-order-btn:hover {
+  opacity: 0.8;
+}
 
 .cat-breakfast {
   border-bottom-color: var(--breakfast-color);
@@ -164,91 +171,282 @@
   border-bottom-color: var(--drink-color);
   color: var(--drink-color);
 }
-.badge {
-  display: inline-block;
-  font-size: 12px;
-  padding: 2px 10px;
-  border-radius: 12px;
-  margin-top: 6px;
-  margin-left: 4px;
-}
 
-.badge-vegetarian {
-  background-color: #e8f5e9;
-  color: #2e7d32;
-}
-
-.badge-nuts {
-  background-color: #fff3e0;
-  color: #e65100;
-}
-
-.badge-dairy {
-  background-color: #e3f2fd;
-  color: #1565c0;
-}
-
-.badge-gluten_free {
-  background-color: #f3e5f5;
-  color: #6a1b9a;
-}
-
-.badge-spicy {
-  background-color: #ffebee;
-  color: #c62828;
-}
-.cat-filters {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.filter-btn {
-  padding: 8px 16px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  background: white;
-  cursor: pointer;
-  font-family: 'Vazirmatn', Tahoma, sans-serif;
-  font-size: 14px;
-  transition: all 0.2s;
-}
-
-.filter-btn:hover {
-  background: #f0f0f0;
-  border-color: var(--main-color);
-  color: var(--main-color);
-}
-
-.filter-btn.active {
-  background: var(--main-color);
-  color: white;
-  border-color: var(--main-color);
-}
-/* ===== Menu Search ===== */
-
-.menu-search-box {
-    margin-bottom: 20px;
+/* ===== فیلترهای پیشرفته ===== */
+.advanced-filters {
     display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 15px 0 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 16px;
     justify-content: center;
+}
+
+.filter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 18px;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    background: white;
+    cursor: pointer;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    user-select: none;
+}
+
+.filter-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-color: #bbb;
+}
+
+.filter-badge.active {
+    color: white;
+    border-color: var(--main-color, #b8860b);
+    background: var(--main-color, #b8860b);
+    box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3);
+    transform: translateY(-2px);
+}
+
+.filter-badge.active::after {
+    content: ' ✓';
+    font-weight: bold;
+}
+
+.filter-badge.delivery { border-color: #2196F3; color: #2196F3; }
+.filter-badge.delivery.active { background: #2196F3; border-color: #2196F3; color: white; box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3); }
+
+.filter-badge.pickup{border-color: #4CAF50; color: #4CAF50; }
+.filter-badge.pickup.active { background: #4CAF50; border-color: #4CAF50; color: white; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
+
+.filter-badge.discount { border-color: #FF5722; color: #FF5722; }
+.filter-badge.discount.active { background: #FF5722; border-color: #FF5722; color: white; box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3); }
+
+.filter-badge[data-filter="vegetarian"] { border-color: #4CAF50; color: #4CAF50; }
+.filter-badge[data-filter="vegetarian"].active { background: #4CAF50; border-color: #4CAF50; color: white; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
+
+.filter-badge[data-filter="gluten_free"] { border-color: #9C27B0; color: #9C27B0; }
+.filter-badge[data-filter="gluten_free"].active { background: #9C27B0; border-color: #9C27B0; color: white; box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3); }
+
+.filter-badge[data-filter="nuts"] { border-color: #FF9800; color: #FF9800; }
+.filter-badge[data-filter="nuts"].active { background: #FF9800; border-color: #FF9800; color: white; box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3); }
+
+.filter-badge[data-filter="dairy"] { border-color: #00BCD4; color: #00BCD4; }
+.filter-badge[data-filter="dairy"].active { background: #00BCD4; border-color: #00BCD4; color: white; box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3); }
+
+.filter-badge[data-filter="spicy"] { border-color: #F44336; color: #F44336; }
+.filter-badge[data-filter="spicy"].active { background: #F44336; border-color: #F44336; color: white; box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3); }
+
+/* ===== جعبه جستجو ===== */
+.menu-search-box {
+    max-width: 500px;
+    margin: 0 auto 20px;
+    padding: 0 10px;
 }
 
 #menu-search {
     width: 100%;
-    max-width: 500px;
-    padding: 12px 18px;
-    border: 1px solid #ddd;
-    border-radius: 30px;
+    padding: 10px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
     font-family: 'Vazirmatn', Tahoma, sans-serif;
     font-size: 14px;
+    transition: all 0.3s;
+    background: white;
     outline: none;
-    transition: all .3s ease;
-    box-sizing: border-box;
+    text-align: center;
 }
 
 #menu-search:focus {
-    border-color: var(--main-color);
-    box-shadow: 0 0 0 3px rgba(184, 134, 11, .15);
+    border-color: var(--main-color, #b8860b);
+    box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.1);
+}
+
+#menu-search::placeholder {
+    color: #aaa;
+    text-align: center;
+}
+
+/* ===== فیلترهای دسته‌بندی ===== */
+.cat-filters {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #fafafa;
+    border-radius: 12px;
+}
+
+.filter-btn {
+    padding: 8px 20px;
+    border: 2px solid transparent;
+    border-radius: 50px;
+    background: transparent;
+    cursor: pointer;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover {
+    color: var(--main-color, #b8860b);
+    background: rgba(184, 134, 11, 0.05);
+}
+
+.filter-btn.active {
+    background: var(--main-color, #b8860b);
+    color: white;
+    border-color: var(--main-color, #b8860b);
+    box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+}
+
+/* انیمیشن */
+.item {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.item.hidden { display: none !important; }
+.item.show { animation: fadeInUp 0.4s ease forwards; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* تعداد آیتم‌ها */
+.filter-count {
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+    padding: 8px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+/* کوپن و هدیه */
+.coupon-info {
+    font-size: 12px;
+    color: #e53935;
+    background: #ffebee;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-top: 5px;
+    display: inline-block;
+    border: 1px dashed #e53935;
+}
+
+.gift-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #f9ca24, #f0932b);
+    color: white;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+/* نشان‌های رژیمی */
+.badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-top: 4px;
+    margin-left: 4px;
+    font-weight: 500;
+}
+.badge-vegetarian { background-color: #e8f5e9; color: #2e7d32; }
+.badge-gluten_free { background-color: #f3e5f5; color: #6a1b9a; }
+.badge-nuts { background-color: #fff3e0; color: #e65100; }
+.badge-dairy { background-color: #e3f2fd; color: #1565c0; }
+.badge-spicy { background-color: #ffebee; color: #c62828; }
+
+/* برچسب‌های ویژه */
+.special-badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-top: 4px;
+    margin-left: 4px;
+    font-weight: bold;
+    color: white;
+}
+
+/* وضعیت موجودی */
+.stock-badge-unavailable {
+    background-color: #e53935;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 4px;
+}
+.stock-badge-limited {
+    background-color: #ff9800;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 4px;
+}
+.stock-badge-preorder {
+    background-color: #2196F3;
+    color: white;
+    padding: 2px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 4px;
+}
+/* ===== فیلتر قیمت ===== */
+.filter-badge.price-economic { border-color: #4CAF50; color: #4CAF50; }
+.filter-badge.price-economic.active { background: #4CAF50; border-color: #4CAF50; color: white; }
+
+.filter-badge.price-medium { border-color: #FF9800; color: #FF9800; }
+.filter-badge.price-medium.active { background: #FF9800; border-color: #FF9800; color: white; }
+
+.filter-badge.price-expensive { border-color: #e74c3c; color: #e74c3c; }
+.filter-badge.price-expensive.active { background: #e74c3c; border-color: #e74c3c; color: white; }
+/* ریسپانسیو */
+@media (max-width: 600px) {
+    .advanced-filters {
+        gap: 6px;
+        padding: 10px;
+        border-radius: 12px;
+    }
+    .filter-badge {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    .filter-btn {
+        font-size: 13px;
+        padding: 6px 14px;
+    }
+    .menu-search-box {
+        max-width: 100%;
+        padding: 0 5px;
+    }
+    #menu-search {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
 }

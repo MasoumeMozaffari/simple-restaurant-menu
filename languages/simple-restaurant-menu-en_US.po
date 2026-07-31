@@ -1,0 +1,74 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Restaurant Menu 1.0\n"
+"POT-Creation-Date: 2024-01-01\n"
+"PO-Revision-Date: 2024-01-01\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "All"
+msgstr "All"
+
+msgid "Search in menu..."
+msgstr "Search in menu..."
+
+msgid "Delivery"
+msgstr "Delivery"
+
+msgid "Pickup"
+msgstr "Pickup"
+
+msgid "Discount"
+msgstr "Discount"
+
+msgid "Vegetarian"
+msgstr "Vegetarian"
+
+msgid "Gluten Free"
+msgstr "Gluten Free"
+
+msgid "Contains Nuts"
+msgstr "Contains Nuts"
+
+msgid "Contains Dairy"
+msgstr "Contains Dairy"
+
+msgid "Spicy"
+msgstr "Spicy"
+
+msgid "Order"
+msgstr "Order"
+
+msgid "Price"
+msgstr "Price"
+
+msgid "Tomans"
+msgstr "Tomans"
+
+msgid "Economic"
+msgstr "Economic"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Expensive"
+msgstr "Expensive"
+
+msgid "Unavailable"
+msgstr "Unavailable"
+
+msgid "Limited"
+msgstr "Limited"
+
+msgid "Pre-order"
+msgstr "Pre-order"
+
+msgid "Gift"
+msgstr "Gift"
+
+msgid "Discount Code"
+msgstr "Discount Code"
