@@ -50,14 +50,26 @@ function create_menu_item_fields() {
             // فیلدهای قیمت
             Field::make('text', 'menu_item_price', 'قیمت (تومان)'),
             Field::make('text', 'menu_item_discount_percent', 'درصد تخفیف (اختیاری، فقط عدد)'),
+            
             // بازه قیمتی
-Field::make('select', 'menu_item_price_range', 'بازه قیمتی')
-    ->add_options(array(
-        'economic' => '💰 اقتصادی',
-        'medium' => '💳 متوسط',
-        'expensive' => '💎 گران',
-    ))
-    ->set_default_value('medium'),
+            Field::make('select', 'menu_item_price_range', 'بازه قیمتی')
+                ->add_options(array(
+                    'economic' => '💰 اقتصادی',
+                    'medium' => '💳 متوسط',
+                    'expensive' => '💎 گران',
+                ))
+                ->set_default_value('medium'),
+            
+            // ✅ وضعیت موجودی (جدید)
+            Field::make('select', 'menu_item_stock', 'وضعیت موجودی')
+                ->add_options(array(
+                    'available' => '✅ موجود',
+                    'limited' => '⚠️ تعداد محدود',
+                    'unavailable' => '❌ ناموجود',
+                    'preorder' => '📦 پیش‌سفارش',
+                ))
+                ->set_default_value('available'),
+            
             // فیلدهای تحویل و ارسال
             Field::make('checkbox', 'menu_item_delivery', 'ارسال با پیک'),
             Field::make('checkbox', 'menu_item_pickup', 'تحویل حضوری'),
@@ -72,7 +84,7 @@ Field::make('select', 'menu_item_price_range', 'بازه قیمتی')
                     'gluten_free' => 'بدون گلوتن',
                 )),
             
-            // برچسب‌های ویژه (جدید)
+            // برچسب‌های ویژه
             Field::make('set', 'menu_item_special_badges', 'برچسب‌های ویژه')
                 ->add_options(array(
                     'best_seller' => 'پرفروش‌ترین',
@@ -83,7 +95,7 @@ Field::make('select', 'menu_item_price_range', 'بازه قیمتی')
                     'popular' => 'محبوب',
                 )),
             
-            // امتیاز (جدید)
+            // امتیاز
             Field::make('select', 'menu_item_rating', 'امتیاز')
                 ->add_options(array(
                     '0' => 'بدون امتیاز',
@@ -95,7 +107,7 @@ Field::make('select', 'menu_item_price_range', 'بازه قیمتی')
                 ))
                 ->set_default_value('0'),
             
-            // زمان آماده‌سازی (جدید)
+            // زمان آماده‌سازی
             Field::make('text', 'menu_item_prep_time', 'زمان آماده‌سازی (دقیقه)')
                 ->set_help_text('مثلاً: ۲۰-۳۰ دقیقه'),
             
@@ -247,6 +259,38 @@ function display_restaurant_menu() {
             background-color: ' . esc_attr($btn_hover) . ' !important;
         }
         .filter-btn.active { background-color: ' . esc_attr($main_color) . '; border-color: ' . esc_attr($main_color) . '; }
+        
+        /* ===== وضعیت موجودی ===== */
+        .stock-badge-unavailable {
+            background-color: #e53935;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .stock-badge-limited {
+            background-color: #ff9800;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .stock-badge-preorder {
+            background-color: #2196F3;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 4px;
+        }
     </style>';
 
     echo '<div class="simple-menu-wrapper">';
@@ -263,7 +307,7 @@ function display_restaurant_menu() {
     
     // فیلترهای دسته‌بندی
     echo '<div class="cat-filters">';
-   echo '<button class="filter-btn active" data-filter="all">همه</button>';
+    echo '<button class="filter-btn active" data-filter="all">همه</button>';
     foreach ($sections as $s) {
         echo '<button class="filter-btn" data-filter="' . esc_attr($s->slug) . '">' . esc_html($s->name) . '</button>';
     }
@@ -274,10 +318,9 @@ function display_restaurant_menu() {
     echo '<button class="filter-badge delivery" data-filter="delivery">🚚 ارسال با پیک</button>';
     echo '<button class="filter-badge pickup" data-filter="pickup">🏪 تحویل حضوری</button>';
     echo '<button class="filter-badge discount" data-filter="discount">🔥 تخفیف</button>';
-    // فیلتر قیمت
-echo '<button class="filter-badge price-economic" data-filter="economic">💰 اقتصادی</button>';
-echo '<button class="filter-badge price-medium" data-filter="medium">💳 متوسط</button>';
-echo '<button class="filter-badge price-expensive" data-filter="expensive">💎 گران</button>';
+    echo '<button class="filter-badge price-economic" data-filter="economic">💰 اقتصادی</button>';
+    echo '<button class="filter-badge price-medium" data-filter="medium">💳 متوسط</button>';
+    echo '<button class="filter-badge price-expensive" data-filter="expensive">💎 گران</button>';
     $badge_filters = array(
         'vegetarian' => '🌱 گیاهی',
         'gluten_free' => '🌾 بدون گلوتن',
@@ -305,7 +348,8 @@ echo '<button class="filter-badge price-expensive" data-filter="expensive">💎 
             'post_type' => 'menu_item',
             'tax_query' => array(
                 array(
-                    'taxonomy' => 'menu_section','field' => 'slug',
+                    'taxonomy' => 'menu_section',
+                    'field' => 'slug',
                     'terms' => $section->slug,
                 ),
             ),
@@ -327,10 +371,16 @@ echo '<button class="filter-badge price-expensive" data-filter="expensive">💎 
                 $gift = carbon_get_post_meta(get_the_ID(), 'menu_item_gift');
                 $price_range = carbon_get_post_meta(get_the_ID(), 'menu_item_price_range');
                 
-                // فیلدهای جدید
+                // ✅ فیلدهای جدید
                 $special_badges = carbon_get_post_meta(get_the_ID(), 'menu_item_special_badges');
                 $rating = carbon_get_post_meta(get_the_ID(), 'menu_item_rating');
                 $prep_time = carbon_get_post_meta(get_the_ID(), 'menu_item_prep_time');
+                
+                // ✅ وضعیت موجودی
+                $stock = carbon_get_post_meta(get_the_ID(), 'menu_item_stock');
+                $is_unavailable = ($stock === 'unavailable');
+                $is_limited = ($stock === 'limited');
+                $is_preorder = ($stock === 'preorder');
 
                 $has_discount = !empty($discount_percent) && is_numeric($discount_percent) && $discount_percent > 0;
                 $final_price = $price;
@@ -356,7 +406,16 @@ echo '<button class="filter-badge price-expensive" data-filter="expensive">💎 
                 echo '<h3>' . esc_html(get_the_title()) . '</h3>';
                 echo '<p>' . esc_html(get_the_excerpt()) . '</p>';
 
-                // نمایش برچسب‌های ویژه (جدید)
+                // ✅ نمایش وضعیت موجودی
+                if ($is_unavailable) {
+                    echo '<span class="stock-badge-unavailable">❌ ناموجود</span>';
+                } elseif ($is_limited) {
+                    echo '<span class="stock-badge-limited">⚠️ تعداد محدود</span>';
+                } elseif ($is_preorder) {
+                    echo '<span class="stock-badge-preorder">📦 پیش‌سفارش</span>';
+                }
+
+                // نمایش برچسب‌های ویژه
                 if (is_array($special_badges) && !empty($special_badges)) {
                     $badge_colors = array(
                         'best_seller' => '#e74c3c',
@@ -381,15 +440,16 @@ echo '<button class="filter-badge price-expensive" data-filter="expensive">💎 
                     }
                 }
 
-                // نمایش امتیاز (جدید)
-                if ($rating > 0) {echo '<div style="margin-top:5px;font-size:14px;">';
+                // نمایش امتیاز
+                if ($rating > 0) {
+                    echo '<div style="margin-top:5px;font-size:14px;">';
                     for ($i = 1; $i <= $rating; $i++) {
                         echo '⭐';
                     }
                     echo '</div>';
                 }
 
-                // نمایش زمان آماده‌سازی (جدید)
+                // نمایش زمان آماده‌سازی
                 if (!empty($prep_time)) {
                     echo '<div style="font-size:12px;color:#666;margin-top:4px;">⏱️ ' . esc_html($prep_time) . ' دقیقه</div>';
                 }
@@ -427,8 +487,10 @@ echo '<button class="filter-badge price-expensive" data-filter="expensive">💎 
                     echo '<p class="original-price">' . esc_html(convert_to_persian_digits($price)) . '</p>';
                 }
                 echo '<p class="price">' . esc_html(convert_to_persian_digits($final_price)) . ' تومان</p>';
-                echo '</div>';
-                if (!empty($item_order_url)) {
+                echo '</div>';// ✅ دکمه سفارش - در صورت ناموجود بودن غیرفعال
+                if ($is_unavailable) {
+                    echo '<span style="display:inline-block;padding:6px 16px;border-radius:6px;font-size:12px;font-weight:bold;background:#ccc;color:#888;white-space:nowrap;margin-top:8px;">ناموجود</span>';
+                } elseif (!empty($item_order_url)) {
                     echo '<a href="' . esc_url($item_order_url) . '" target="_blank" class="item-order-btn">' . esc_html($order_text) . '</a>';
                 }
                 echo '</div>';
