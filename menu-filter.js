@@ -21,8 +21,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function filterItems() {
-        var activeCategory = document.querySelector('.filter-btn.active');
-        var categoryFilter = activeCategory ? activeCategory.getAttribute('data-filter') : 'all';
+        // ✅ تغییر: گرفتن همه دسته‌های فعال (چندتایی)
+        var activeCategories = [];
+        categoryButtons.forEach(function(btn) {
+            if (btn.classList.contains('active')) {
+                activeCategories.push(btn.getAttribute('data-filter'));
+            }
+        });
+        
+        // اگر هیچ دسته‌ای انتخاب نشده، همه رو نشون بده
+        var categoryFilter = activeCategories.length > 0 ? activeCategories : ['all'];
         
         var activeBadges = [];
         badgeButtons.forEach(function(b) {
@@ -44,7 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
             var title = item.querySelector('.item-info h3')?.textContent?.toLowerCase() || '';
             var desc = item.querySelector('.item-info p')?.textContent?.toLowerCase() || '';
             
-            var categoryMatch = (categoryFilter === 'all' || categoryFilter === itemCategory);
+            // ✅ بررسی دسته‌بندی (حداقل یکی از دسته‌های فعال)
+            var categoryMatch = categoryFilter.includes('all') || categoryFilter.includes(itemCategory);
             
             var badgesMatch = true;
             if (activeBadges.length > 0) {
@@ -73,12 +82,23 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCount(visibleCount, totalCount);
     }
     
+    // ✅ دکمه‌های دسته‌بندی با قابلیت انتخاب چندتایی
     categoryButtons.forEach(function(button) {
         button.addEventListener('click', function() {
-            categoryButtons.forEach(function(b) {
-                b.classList.remove('active');
-            });
-            button.classList.add('active');
+            // اگر دکمه "همه" کلیک شد، بقیه رو غیرفعال کن
+            if (button.getAttribute('data-filter') === 'all') {
+                categoryButtons.forEach(function(b) {
+                    b.classList.remove('active');
+                });
+                button.classList.add('active');
+            } else {
+                // دکمه "همه" رو غیرفعال کن
+                categoryButtons.forEach(function(b) {
+                    if (b.getAttribute('data-filter') === 'all') {
+                        b.classList.remove('active');
+                    }});
+                button.classList.toggle('active');
+            }
             filterItems();
         });
     });

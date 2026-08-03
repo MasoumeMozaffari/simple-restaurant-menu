@@ -47,11 +47,9 @@ function create_menu_item_fields() {
     Container::make('post_meta', 'جزئیات آیتم منو')
         ->where('post_type', '=', 'menu_item')
         ->add_fields(array(
-            // فیلدهای قیمت
             Field::make('text', 'menu_item_price', 'قیمت (تومان)'),
             Field::make('text', 'menu_item_discount_percent', 'درصد تخفیف (اختیاری، فقط عدد)'),
             
-            // بازه قیمتی
             Field::make('select', 'menu_item_price_range', 'بازه قیمتی')
                 ->add_options(array(
                     'economic' => '💰 اقتصادی',
@@ -60,7 +58,6 @@ function create_menu_item_fields() {
                 ))
                 ->set_default_value('medium'),
             
-            // ✅ وضعیت موجودی (جدید)
             Field::make('select', 'menu_item_stock', 'وضعیت موجودی')
                 ->add_options(array(
                     'available' => '✅ موجود',
@@ -70,11 +67,9 @@ function create_menu_item_fields() {
                 ))
                 ->set_default_value('available'),
             
-            // فیلدهای تحویل و ارسال
             Field::make('checkbox', 'menu_item_delivery', 'ارسال با پیک'),
             Field::make('checkbox', 'menu_item_pickup', 'تحویل حضوری'),
             
-            // نشان‌های رژیمی
             Field::make('set', 'menu_item_badges', 'نشان‌های رژیمی')
                 ->add_options(array(
                     'vegetarian'  => 'گیاهی',
@@ -84,7 +79,6 @@ function create_menu_item_fields() {
                     'gluten_free' => 'بدون گلوتن',
                 )),
             
-            // برچسب‌های ویژه
             Field::make('set', 'menu_item_special_badges', 'برچسب‌های ویژه')
                 ->add_options(array(
                     'best_seller' => 'پرفروش‌ترین',
@@ -95,7 +89,6 @@ function create_menu_item_fields() {
                     'popular' => 'محبوب',
                 )),
             
-            // امتیاز
             Field::make('select', 'menu_item_rating', 'امتیاز')
                 ->add_options(array(
                     '0' => 'بدون امتیاز',
@@ -107,18 +100,13 @@ function create_menu_item_fields() {
                 ))
                 ->set_default_value('0'),
             
-            // زمان آماده‌سازی
             Field::make('text', 'menu_item_prep_time', 'زمان آماده‌سازی (دقیقه)')
                 ->set_help_text('مثلاً: ۲۰-۳۰ دقیقه'),
             
-            // فیلدهای کوپن و جایزه
             Field::make('checkbox', 'menu_item_has_coupon', 'دارای کوپن تخفیف'),
             Field::make('text', 'menu_item_coupon_code', 'کد کوپن'),
             Field::make('text', 'menu_item_coupon_title', 'عنوان کوپن'),
-            Field::make('text', 'menu_item_gift', 'هدیه خرید (مثلاً سوپ رایگان)'),
-            
-            // لینک سفارش
-            Field::make('text', 'menu_item_order_url', 'لینک سفارش این آیتم (اختیاری)'),
+            Field::make('text', 'menu_item_gift', 'هدیه خرید (مثلاً سوپ رایگان)'),Field::make('text', 'menu_item_order_url', 'لینک سفارش این آیتم (اختیاری)'),
         ));
 }
 add_action('carbon_fields_register_fields', 'create_menu_item_fields');
@@ -126,20 +114,17 @@ add_action('carbon_fields_register_fields', 'create_menu_item_fields');
 function create_menu_color_settings() {
     Container::make('theme_options', 'تنظیمات منو')
         ->add_fields(array(
-            // رنگ‌بندی
             Field::make('color', 'menu_main_color', 'رنگ اصلی')->set_default_value('#b8860b'),
             Field::make('color', 'menu_breakfast_color', 'رنگ صبحانه')->set_default_value('#e67e22'),
             Field::make('color', 'menu_main_dish_color', 'رنگ غذای اصلی')->set_default_value('#c0392b'),
             Field::make('color', 'menu_drink_color', 'رنگ نوشیدنی')->set_default_value('#2980b9'),
             Field::make('color', 'menu_background_color', 'رنگ پس‌زمینه')->set_default_value('#fdfaf5'),
             
-            // تنظیمات دکمه سفارش
             Field::make('text', 'menu_order_text', 'متن دکمه سفارش')->set_default_value('سفارش'),
             Field::make('color', 'menu_order_btn_color', 'رنگ دکمه سفارش')->set_default_value('#2e7d32'),
             Field::make('color', 'menu_order_btn_hover', 'رنگ دکمه در هاور')->set_default_value('#1b5e20'),
             Field::make('color', 'menu_order_btn_text', 'رنگ متن دکمه')->set_default_value('#ffffff'),
             
-            // انتخاب فونت
             Field::make('select', 'menu_font_type', 'نوع فونت')
                 ->add_options(array(
                     'default' => 'پیش‌فرض (وزیرمتن)',
@@ -150,12 +135,10 @@ function create_menu_color_settings() {
                 ))
                 ->set_default_value('default'),
             
-            // فیلد آپلود فایل فونت
             Field::make('file', 'menu_custom_font', 'آپلود فایل فونت')
                 ->set_type(array('font/ttf', 'font/otf', 'font/woff', 'font/woff2'))
                 ->set_help_text('فایل‌های با فرمت‌های ttf, otf, woff, woff2'),
             
-            // نام فونت دلخواه
             Field::make('text', 'menu_custom_font_name', 'نام فونت دلخواه')
                 ->set_help_text('مثلاً: MyCustomFont'),
         ));
@@ -208,9 +191,7 @@ add_filter('upload_mimes', 'allow_font_mime_types');
 function convert_to_persian_digits($string) {
     $persian_digits = array('۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹');
     return str_replace(range(0, 9), $persian_digits, $string);
-}
-
-function display_restaurant_menu() {
+}function display_restaurant_menu() {
     ob_start();
     
     $main_color = carbon_get_theme_option('menu_main_color');
@@ -224,7 +205,6 @@ function display_restaurant_menu() {
     $btn_text = carbon_get_theme_option('menu_order_btn_text');
     $font_type = carbon_get_theme_option('menu_font_type');
     
-    // تنظیم فونت
     $font_style = '';
     if ($font_type === 'custom') {
         $custom_font_name = carbon_get_theme_option('menu_custom_font_name');
@@ -247,20 +227,19 @@ function display_restaurant_menu() {
             background-color: ' . esc_attr($bg_color) . '; 
             ' . $font_style . '
         }
-        .simple-menu-wrapper .price { color: ' . esc_attr($main_color) . '; }
-        .simple-menu-wrapper .cat-breakfast { color: ' . esc_attr($breakfast_color) . '; border-bottom-color: ' . esc_attr($breakfast_color) . '; }
-        .simple-menu-wrapper .cat-main-dish { color: ' . esc_attr($main_dish_color) . '; border-bottom-color: ' . esc_attr($main_dish_color) . '; }
-        .simple-menu-wrapper .cat-drink { color: ' . esc_attr($drink_color) . '; border-bottom-color: ' . esc_attr($drink_color) . '; }
-        .simple-menu-wrapper .item-order-btn { 
-            background-color: ' . esc_attr($btn_color) . ' !important;
-            color: ' . esc_attr($btn_text) . ' !important;
+        // .simple-menu-wrapper .price { color: ' . esc_attr($main_color) . '; }
+        // .simple-menu-wrapper .cat-breakfast { color: ' . esc_attr($breakfast_color) . ';  }
+        // .simple-menu-wrapper .cat-main-dish { color: ' . esc_attr($main_dish_color) . '; b }
+        // .simple-menu-wrapper .cat-drink { }
+        // .simple-menu-wrapper .item-order-btn { 
+        //     background-color: ' . esc_attr($btn_color) . ' !important;
+        //     color: ' . esc_attr($btn_text) . ' !important;
         }
         .simple-menu-wrapper .item-order-btn:hover { 
-            background-color: ' . esc_attr($btn_hover) . ' !important;
+            // background-color: ' . esc_attr($btn_hover) . ' !important;
         }
         .filter-btn.active { background-color: ' . esc_attr($main_color) . '; border-color: ' . esc_attr($main_color) . '; }
         
-        /* ===== وضعیت موجودی ===== */
         .stock-badge-unavailable {
             background-color: #e53935;
             color: white;
@@ -295,7 +274,6 @@ function display_restaurant_menu() {
 
     echo '<div class="simple-menu-wrapper">';
     
-    // جعبه جستجو
     echo '<div class="menu-search-box">
         <input type="text" id="menu-search" placeholder="🔍 جستجو در منو...">
     </div>';
@@ -305,11 +283,29 @@ function display_restaurant_menu() {
         'hide_empty' => false,
     ));
     
+    // ✅ آیکون‌های مخصوص هر دسته
+    $category_icons = array(
+        'breakfast' => '🥐',
+        'lunch' => '🍽️',
+        'main-dish' => '🥘',
+        'drink' => '🥤',
+        'fastfood' => '🍔',
+        'iranian' => '🍛',
+        'diet' => '🥗',
+        'kababi' => '🥩',
+        'dinner' => '🌙',
+        'vegetarian' => '🌱',
+        'salad' => '🥬',
+        'seafood' => '🦞',
+        'international' => '🌍',
+    );
+    
     // فیلترهای دسته‌بندی
     echo '<div class="cat-filters">';
-    echo '<button class="filter-btn active" data-filter="all">همه</button>';
+    echo '<button class="filter-btn active" data-filter="all">🍽️ همه</button>';
     foreach ($sections as $s) {
-        echo '<button class="filter-btn" data-filter="' . esc_attr($s->slug) . '">' . esc_html($s->name) . '</button>';
+        $icon = isset($category_icons[$s->slug]) ? $category_icons[$s->slug] : '🍽️';
+        echo '<button class="filter-btn cat-' . esc_attr($s->slug) . '" data-filter="' . esc_attr($s->slug) . '">' . $icon . ' ' . esc_html($s->name) . '</button>';
     }
     echo '</div>';
     
@@ -371,12 +367,10 @@ function display_restaurant_menu() {
                 $gift = carbon_get_post_meta(get_the_ID(), 'menu_item_gift');
                 $price_range = carbon_get_post_meta(get_the_ID(), 'menu_item_price_range');
                 
-                // ✅ فیلدهای جدید
                 $special_badges = carbon_get_post_meta(get_the_ID(), 'menu_item_special_badges');
                 $rating = carbon_get_post_meta(get_the_ID(), 'menu_item_rating');
                 $prep_time = carbon_get_post_meta(get_the_ID(), 'menu_item_prep_time');
                 
-                // ✅ وضعیت موجودی
                 $stock = carbon_get_post_meta(get_the_ID(), 'menu_item_stock');
                 $is_unavailable = ($stock === 'unavailable');
                 $is_limited = ($stock === 'limited');
@@ -386,16 +380,14 @@ function display_restaurant_menu() {
                 $final_price = $price;
                 if ($has_discount) {
                     $final_price = round($price - ($price * $discount_percent / 100));
-                }
-
-                // ساخت لیست نشان‌ها برای فیلتر
-                $badges_list = is_array($badges) ? implode(',', $badges) : '';
+                }$badges_list = is_array($badges) ? implode(',', $badges) : '';
                 if ($delivery) $badges_list .= ',delivery';
                 if ($pickup) $badges_list .= ',pickup';
                 if ($has_discount) $badges_list .= ',discount';
                 if (!empty($price_range)) $badges_list .= ',' . $price_range;
 
-                echo '<div class="item" data-category="' . esc_attr($section->slug) . '" data-badges="' . esc_attr($badges_list) . '">';
+                // ✅ کلاس دسته‌بندی به آیتم اضافه شد
+                echo '<div class="item cat-' . esc_attr($section->slug) . '" data-category="' . esc_attr($section->slug) . '" data-badges="' . esc_attr($badges_list) . '">';
                 
                 if (has_post_thumbnail()) {
                     the_post_thumbnail('thumbnail');
@@ -406,7 +398,6 @@ function display_restaurant_menu() {
                 echo '<h3>' . esc_html(get_the_title()) . '</h3>';
                 echo '<p>' . esc_html(get_the_excerpt()) . '</p>';
 
-                // ✅ نمایش وضعیت موجودی
                 if ($is_unavailable) {
                     echo '<span class="stock-badge-unavailable">❌ ناموجود</span>';
                 } elseif ($is_limited) {
@@ -415,7 +406,6 @@ function display_restaurant_menu() {
                     echo '<span class="stock-badge-preorder">📦 پیش‌سفارش</span>';
                 }
 
-                // نمایش برچسب‌های ویژه
                 if (is_array($special_badges) && !empty($special_badges)) {
                     $badge_colors = array(
                         'best_seller' => '#e74c3c',
@@ -440,7 +430,6 @@ function display_restaurant_menu() {
                     }
                 }
 
-                // نمایش امتیاز
                 if ($rating > 0) {
                     echo '<div style="margin-top:5px;font-size:14px;">';
                     for ($i = 1; $i <= $rating; $i++) {
@@ -449,12 +438,10 @@ function display_restaurant_menu() {
                     echo '</div>';
                 }
 
-                // نمایش زمان آماده‌سازی
                 if (!empty($prep_time)) {
                     echo '<div style="font-size:12px;color:#666;margin-top:4px;">⏱️ ' . esc_html($prep_time) . ' دقیقه</div>';
                 }
 
-                // نمایش نشان‌های رژیمی
                 if (is_array($badges)) {
                     foreach ($badges as $badge) {
                         $badge_label = isset($badge_labels[$badge]) ? $badge_labels[$badge] : $badge;
@@ -462,7 +449,6 @@ function display_restaurant_menu() {
                     }
                 }
 
-                // نمایش نشان‌های تحویل
                 if ($delivery) {
                     echo '<span class="badge" style="background:#e3f2fd;color:#1565c0;">🚚 ارسال با پیک</span>';
                 }
@@ -470,7 +456,6 @@ function display_restaurant_menu() {
                     echo '<span class="badge" style="background:#e8f5e9;color:#2e7d32;">🏪 تحویل حضوری</span>';
                 }
 
-                // نمایش کوپن و هدیه
                 if ($has_coupon && !empty($coupon_code)) {
                     echo '<div class="coupon-info">🎫 کد: ' . esc_html($coupon_code) . ' - ' . esc_html($coupon_title) . '</div>';
                 }
@@ -487,7 +472,8 @@ function display_restaurant_menu() {
                     echo '<p class="original-price">' . esc_html(convert_to_persian_digits($price)) . '</p>';
                 }
                 echo '<p class="price">' . esc_html(convert_to_persian_digits($final_price)) . ' تومان</p>';
-                echo '</div>';// ✅ دکمه سفارش - در صورت ناموجود بودن غیرفعال
+                echo '</div>';
+                
                 if ($is_unavailable) {
                     echo '<span style="display:inline-block;padding:6px 16px;border-radius:6px;font-size:12px;font-weight:bold;background:#ccc;color:#888;white-space:nowrap;margin-top:8px;">ناموجود</span>';
                 } elseif (!empty($item_order_url)) {

@@ -1,9 +1,9 @@
 :root {
-    --main-color: #b8860b;
-    --dark-color: #1a1a1a;
-    --breakfast-color: #e67e22;
-    --main-dish-color: #c0392b;
-    --drink-color: #2980b9;
+  --main-color: #b8860b;
+  --dark-color: #1a1a1a;
+  --breakfast-color: #e67e22;
+  --main-dish-color: #c0392b;
+  /* --drink-color: #2980b9; */
 }
 
 .simple-menu-wrapper {
@@ -22,11 +22,13 @@
     max-width: 1100px;
     padding: 30px 80px;
   }
+
   .items-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
+
   .items-grid .item {
     margin-bottom: 0;
   }
@@ -36,6 +38,7 @@
   .simple-menu-wrapper {
     padding: 10px;
   }
+
   .item img {
     width: 60px;
     height: 60px;
@@ -88,10 +91,12 @@
   overflow-wrap: break-word;
   word-break: break-word;
 }
+
 .simple-menu-wrapper .item-info h3 a {
   text-decoration: none;
   color: inherit;
 }
+
 .simple-menu-wrapper .item-info p {
   font-weight: 300;
   font-size: 13px;
@@ -153,300 +158,858 @@
   white-space: nowrap;
   margin-top: 8px;
 }
+
 .item-order-btn:hover {
   opacity: 0.8;
 }
 
-.cat-breakfast {
-  border-bottom-color: var(--breakfast-color);
-  color: var(--breakfast-color);
+/* ===== فیلترهای دسته‌بندی ===== */
+.cat-filters {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 10px;
+  background: #fafafa;
+  border-radius: 12px;
 }
 
-.cat-main-dish {
-  border-bottom-color: var(--main-dish-color);
+/* استایل پایه دکمه‌ها - مثل فیلتر badge ها */
+.filter-btn {
+  padding: 8px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 50px;
+  /* background: white; */
+  cursor: pointer;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  /* color: #555; */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  user-select: none;
+}
+
+.filter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== رنگ‌های هر دسته (مثل فیلتر badge ها) ===== */
+.filter-btn.cat-fast-food {
+  border-color: #ff0368;
+  color: #ff0368;
+}
+
+.filter-btn.cat-fast-food.active,
+.filter-btn.cat-fast-food:hover {
+  background: #ff0368;
+  color: white;
+  border-color: #ff0368;
+  /* box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3); */
+}
+
+.filter-btn.cat-fast-food.active::after {
+  content: ' ✓';
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.filter-btn.cat-organic {
+  border-color: #09d271;
+  color: #09d271;
+}
+
+.filter-btn.cat-organic.active,
+.filter-btn.cat-organic:hover {
+  background: #09d271;
+  color: white;
+  border-color: #09d271;
+  /* box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3); */
+}
+
+.filter-btn.cat-organic.active::after {
+  content: '✓';
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.filter-btn.cat-lunch {
+  border-color: #9fa2a0;
+  color: #9fa2a0;
+}
+
+.filter-btn.cat-lunch.active,
+.filter-btn.cat-lunch:hover {
+  background: #9fa2a0;
+  color: white;
+  border-color: #9fa2a0;
+  /* box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3); */
+}
+
+.filter-btn.cat-lunch.active::after {
+  content: '✓';
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+.filter-btn.cat-drinks {
+  background-color:#ffff;
+  border-color: #1b04eb;
+  color: #1b04eb;
+}
+
+.filter-btn.cat-drinks.active,
+.filter-btn.cat-drinks:hover {
+  background-color: #1b04eb;
+  color: white;
+  border-color: #1b04eb;
+
+  /* box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3); */
+}
+
+.filter-btn.cat-drinks.active::after {
+  content: '✓';
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+.filter-btn.cat-iranian {
+  border-color: #cc2e2e;
+  color: #cc2e2e;
+}
+
+.filter-btn.cat-iranian.active,
+.filter-btn.cat-iranian:hover {
+  background: #cc2e2e;
+  color: white;
+  border-color: #cc2e2e;
+  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+}
+
+.filter-btn.cat-iranian.active::after {
+  content: ' ✓';
+  font-weight: bold;
+}
+
+.filter-btn.cat-diet {
+  border-color: #24de27;
+  color: #24de27;
+}
+
+.filter-btn.cat-diet.active,
+.filter-btn.cat-diet:hover {
+  background: #24de27;
+  color: white;
+  border-color: #24de27;
+  /* box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3); */
+}
+
+.filter-btn.cat-diet.active::after {
+  content: ' ✓';
+  font-weight: bold;
+}
+
+.filter-btn.cat-kabab {
+  border-color: #5a3903;
+  color: #5a3903;
+}
+
+.filter-btn.cat-kabab.active,
+.filter-btn.cat-kabab:hover {
+  background: #5a3903;
+  color: white;
+  border-color: #5a3903;
+  /* box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3); */
+}
+
+.filter-btn.cat-kabab.active::after {
+  content: ' ✓';
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+.filter-btn.cat-marine {
+  border-color: #7f2bec;
+  color: #7f2bec;
+}
+
+.filter-btn.cat-marine.active,
+.filter-btn.cat-marine:hover {
+  background: #7f2bec;
+  color: white;
+  border-color: #7f2bec;
+  /* box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3); */
+}
+
+.filter-btn.cat-marine.active::after {
+  content: ' ✓';
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.filter-btn.cat-diner {
+  border-color: #ffb043;
+  color: #ffb043;
+}
+
+.filter-btn.cat-diner.active,
+.filter-btn.cat-diner:hover {
+  background-color: #ffb043 !important;
+  color: white;
+  border-color: #ffb043;
+  /* box-shadow: 0 4px 15px rgba(155, 89, 182, 0.3); */
+}
+
+.filter-btn.cat-diner.active::after {
+  content: ' ✓';
+  font-weight: bold;
+}
+
+.filter-btn.cat-vegetarian {
+  border-color: #1abc9c;
+  color: #1abc9c;
+}
+
+.filter-btn.cat-vegetarian.active,
+.filter-btn.cat-vegetarian:hover {
+  background: #1abc9c;
+  color: white;
+  border-color: #1abc9c;
+  box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
+}
+
+.filter-btn.cat-vegetarian.active::after {
+  content: ' ✓';
+  font-weight: bold;
+}
+
+.filter-btn.cat-salad {
+  border-color: #76c446;
+  color: #76c446;
+}
+
+.filter-btn.cat-salad.active,
+.filter-btn.cat-salad:hover {
+  background: #76c446;
+  color: white;
+  border-color: #76c446;
+  /* box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3); */
+}
+
+.filter-btn.cat-salad.active::after {
+  content: ' ✓';
+  font-weight: bold;
+}
+
+.filter-btn.cat-seafood {
+  border-color: #2980b9;
+  color: #2980b9;
+}
+
+.filter-btn.cat-seafood.active,
+.filter-btn.cat-seafood:hover {
+  background: #eb0eff;
+  color: white;
+  border-color: #2980b9;
+  box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+}
+
+.filter-btn.cat-seafood.active::after {
+  content: ' ✓';
+  font-weight: bold;
+}
+
+.filter-btn.cat-international {
+  border-color: #e67e22;
+  color: #e67e22;
+}
+
+.filter-btn.cat-international.active,
+.filter-btn.cat-international:hover {
+  background: #e67e22;
+  color: white;
+  border-color: #e67e22;
+  /* box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3); */
+}
+
+.filter-btn.cat-international.active::after {
+  content: ' ✓';
+  font-weight: bold;
+}
+
+/* ===== دسته‌بندی‌های اصلی ===== */
+.filter-btn.cat-breakfast {
+  border-color: #ff5c5c;
+  color: #ff5c5c;
+}
+
+.filter-btn.cat-breakfast.active,
+.filter-btn.cat-breakfast:hover {
+  background: #ff5c5c;
+  color: white;
+  border-color: #ff5c5c;
+  /* box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3); */
+}
+
+.filter-btn.cat-breakfast.active::after {
+  content: ' ✓';
+  /* font-weight: bold; */
+  border-color: #F08080;
+}
+
+.filter-btn.cat-main-dish {
+  border-color: var(--main-dish-color);
   color: var(--main-dish-color);
 }
 
-.cat-drink {
-  border-bottom-color: var(--drink-color);
+.filter-btn.cat-main-dish.active,
+.filter-btn.cat-main-dish:hover {
+  background: #AB0062;
+  color: white;
+  border-color: #AB0062;
+  /* box-shadow: 0 4px 15px rgba(192, 57, 43, 0.3); */
+}
+
+.filter-btn.cat-main-dish.active::after {
+  content: ' ✓';
+  font-weight: bold;
+  border-color: #AB0062;
+}
+
+/* .filter-btn.cat-drink {
+  border-color: var(--drink-color);
   color: var(--drink-color);
+} */
+
+.filter-btn.cat-drink.active,
+.filter-btn.cat-drink:hover {
+  background: var(--drink-color);
+  color: white;
+  border-color: var(--drink-color);
+  box-shadow: 0 4px 15px rgba(41, 128, 185, 0.3);
+}
+
+.filter-btn.cat-drink.active::after {
+  content: ' ✓';
+  font-weight: bold;
 }
 
 /* ===== فیلترهای پیشرفته ===== */
 .advanced-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin: 15px 0 20px;
-    padding: 15px;
-    background: #f8f9fa;
-    border-radius: 16px;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  justify-content: center;
 }
 
 .filter-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 18px;
-    border: 2px solid #e0e0e0;
-    border-radius: 50px;
-    background: white;
-    cursor: pointer;
-    font-family: 'Vazirmatn', Tahoma, sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: #555;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    user-select: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 2px solid #e0e0e0;
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  user-select: none;
 }
 
 .filter-badge:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-color: #bbb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #bbb;
 }
 
 .filter-badge.active {
-    color: white;
-    border-color: var(--main-color, #b8860b);
-    background: var(--main-color, #b8860b);
-    box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3);
-    transform: translateY(-2px);
+  color: white;
+  border-color: var(--main-color, #b8860b);
+  background: var(--main-color, #b8860b);
+  box-shadow: 0 4px 15px rgba(184, 134, 11, 0.3);
+  transform: translateY(-2px);
 }
 
 .filter-badge.active::after {
-    content: ' ✓';
-    font-weight: bold;
+  content: ' ✓';
+  font-weight: bold;
 }
 
-.filter-badge.delivery { border-color: #2196F3; color: #2196F3; }
-.filter-badge.delivery.active { background: #2196F3; border-color: #2196F3; color: white; box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3); }
+.filter-badge.delivery {
+  border-color: #2196F3;
+  color: #2196F3;
+}
 
-.filter-badge.pickup{border-color: #4CAF50; color: #4CAF50; }
-.filter-badge.pickup.active { background: #4CAF50; border-color: #4CAF50; color: white; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
+.filter-badge.delivery.active {
+  background: #2196F3;
+  border-color: #2196F3;
+  color: white;
+  box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+}
 
-.filter-badge.discount { border-color: #FF5722; color: #FF5722; }
-.filter-badge.discount.active { background: #FF5722; border-color: #FF5722; color: white; box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3); }
+.filter-badge.pickup {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
 
-.filter-badge[data-filter="vegetarian"] { border-color: #4CAF50; color: #4CAF50; }
-.filter-badge[data-filter="vegetarian"].active { background: #4CAF50; border-color: #4CAF50; color: white; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3); }
+.filter-badge.pickup.active {
+  background: #4CAF50;
+  border-color: #4CAF50;
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
 
-.filter-badge[data-filter="gluten_free"] { border-color: #9C27B0; color: #9C27B0; }
-.filter-badge[data-filter="gluten_free"].active { background: #9C27B0; border-color: #9C27B0; color: white; box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3); }
+.filter-badge.discount {
+  border-color: #FF5722;
+  color: #FF5722;
+}
 
-.filter-badge[data-filter="nuts"] { border-color: #FF9800; color: #FF9800; }
-.filter-badge[data-filter="nuts"].active { background: #FF9800; border-color: #FF9800; color: white; box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3); }
+.filter-badge.discount.active {
+  background: #FF5722;
+  border-color: #FF5722;
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+}
 
-.filter-badge[data-filter="dairy"] { border-color: #00BCD4; color: #00BCD4; }
-.filter-badge[data-filter="dairy"].active { background: #00BCD4; border-color: #00BCD4; color: white; box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3); }
+.filter-badge[data-filter="vegetarian"] {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
 
-.filter-badge[data-filter="spicy"] { border-color: #F44336; color: #F44336; }
-.filter-badge[data-filter="spicy"].active { background: #F44336; border-color: #F44336; color: white; box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3); }
+.filter-badge[data-filter="vegetarian"].active {
+  background: #4CAF50;
+  border-color: #4CAF50;
+  color: white;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+}
+
+.filter-badge[data-filter="gluten_free"] {
+  border-color: #9C27B0;
+  color: #9C27B0;
+}
+
+.filter-badge[data-filter="gluten_free"].active {
+  background: #9C27B0;
+  border-color: #9C27B0;
+  color: white;
+  box-shadow: 0 4px 15px rgba(156, 39, 176, 0.3);
+}
+
+.filter-badge[data-filter="nuts"] {
+  border-color: #FF9800;
+  color: #FF9800;
+}
+
+.filter-badge[data-filter="nuts"].active {
+  background: #FF9800;
+  border-color: #FF9800;
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 152, 0, 0.3);
+}
+
+.filter-badge[data-filter="dairy"] {
+  border-color: #00BCD4;
+  color: #00BCD4;
+}
+
+.filter-badge[data-filter="dairy"].active {
+  background: #00BCD4;
+  border-color: #00BCD4;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+}
+
+.filter-badge[data-filter="spicy"] {
+  border-color: #F44336;
+  color: #F44336;
+}
+
+.filter-badge[data-filter="spicy"].active {
+  background: #F44336;
+  border-color: #F44336;
+  color: white;
+  box-shadow: 0 4px 15px rgba(244, 67, 54, 0.3);
+}
+
+/* ===== فیلتر قیمت ===== */
+.filter-badge.price-economic {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+
+.filter-badge.price-economic.active {
+  background: #4CAF50;
+  border-color: #4CAF50;
+  color: white;
+}
+
+.filter-badge.price-medium {
+  border-color: #FF9800;
+  color: #FF9800;
+}
+
+.filter-badge.price-medium.active {
+  background: #FF9800;
+  border-color: #FF9800;
+  color: white;
+}
+
+.filter-badge.price-expensive {
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+.filter-badge.price-expensive.active {
+  background: #e74c3c;
+  border-color: #e74c3c;
+  color: white;
+}
 
 /* ===== جعبه جستجو ===== */
 .menu-search-box {
-    max-width: 500px;
-    margin: 0 auto 20px;
-    padding: 0 10px;
+  max-width: 500px;
+  margin: 0 auto 20px;
+  padding: 0 10px;
 }
 
 #menu-search {
-    width: 100%;
-    padding: 10px 20px;
-    border: 2px solid #e0e0e0;
-    border-radius: 50px;
-    font-family: 'Vazirmatn', Tahoma, sans-serif;
-    font-size: 14px;
-    transition: all 0.3s;
-    background: white;
-    outline: none;
-    text-align: center;
+  width: 100%;
+  padding: 10px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 50px;
+  font-family: 'Vazirmatn', Tahoma, sans-serif;
+  font-size: 14px;
+  transition: all 0.3s;
+  background: white;
+  outline: none;
+  text-align: center;
 }
 
 #menu-search:focus {
-    border-color: var(--main-color, #b8860b);
-    box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.1);
+  border-color: var(--main-color, #b8860b);
+  box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.1);
 }
 
 #menu-search::placeholder {
-    color: #aaa;
-    text-align: center;
+  color: #aaa;
+  text-align: center;
 }
 
-/* ===== فیلترهای دسته‌بندی ===== */
-.cat-filters {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-    padding: 10px;
-    background: #fafafa;
-    border-radius: 12px;
+/* ===== استایل آیتم‌های کارت ===== */
+.cat-breakfast {
+  /* border-bottom: 3px solid var(--breakfast-color); */
+  color: var(--breakfast-color);
 }
 
-.filter-btn {
-    padding: 8px 20px;
-    border: 2px solid transparent;
-    border-radius: 50px;
-    background: transparent;
-    cursor: pointer;
-    font-family: 'Vazirmatn', Tahoma, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    color: #666;
-    transition: all 0.3s;
+.cat-main-dish {
+  /* border-bottom: 3px solid var(--main-dish-color); */
+  color: var(--main-dish-color);
 }
 
-.filter-btn:hover {
-    color: var(--main-color, #b8860b);
-    background: rgba(184, 134, 11, 0.05);
+.cat-drink {
+  /* border-bottom: 3px solid var(--drink-color); */
+  color: var(--drink-color);
 }
 
-.filter-btn.active {
-    background: var(--main-color, #b8860b);
-    color: white;
-    border-color: var(--main-color, #b8860b);
-    box-shadow: 0 4px 15px rgba(184, 134, 11, 0.2);
+.cat-fastfood {
+  border-bottom: 3px solid #e74c3c;
+  color: #e74c3c;
+}
+
+.cat-iranian {
+  border-bottom: 3px solid #2ecc71;
+  color: #2ecc71;
+}
+
+.cat-diet {
+  border-bottom: 3px solid #3498db;
+  color: #3498db;
+}
+
+.cat-kababi {
+  border-bottom: 3px solid #f39c12;
+  color: #f39c12;
+}
+
+.cat-dinner {
+  border-bottom: 3px solid #9b59b6;
+  color: #9b59b6;
+}
+
+.cat-vegetarian {
+  border-bottom: 3px solid #1abc9c;
+  color: #1abc9c;
+}
+
+.cat-salad {
+  border-bottom: 3px solid #27ae60;
+  color: #27ae60;
+}
+
+.cat-seafood {
+  border-bottom: 3px solid #2980b9;
+  color: #2980b9;
+}
+
+.cat-international {
+  border-bottom: 3px solid #e67e22;
+  color: #e67e22;
 }
 
 /* انیمیشن */
 .item {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.item.hidden { display: none !important; }
-.item.show { animation: fadeInUp 0.4s ease forwards; }
+
+.item.hidden {
+  display: none !important;
+}
+
+.item.show {
+  animation: fadeInUp 0.4s ease forwards;
+}
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* تعداد آیتم‌ها */
 .filter-count {
-    font-size: 13px;
-    color: #888;
-    text-align: center;
-    padding: 8px;
-    background: #f5f5f5;
-    border-radius: 8px;
-    margin: 10px 0;
+  font-size: 13px;
+  color: #888;
+  text-align: center;
+  padding: 8px;
+  background: #f5f5f5;
+  border-radius: 8px;
+  margin: 10px 0;
 }
 
 /* کوپن و هدیه */
 .coupon-info {
-    font-size: 12px;
-    color: #e53935;
-    background: #ffebee;
-    padding: 3px 10px;
-    border-radius: 4px;
-    margin-top: 5px;
-    display: inline-block;
-    border: 1px dashed #e53935;
+  font-size: 12px;
+  color: #e53935;
+  background: #ffebee;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-top: 5px;
+  display: inline-block;
+  border: 1px dashed #e53935;
 }
 
 .gift-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #f9ca24, #f0932b);
-    color: white;
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 4px;
-    margin-top: 5px;
-    font-weight: bold;
+  display: inline-block;
+  background: linear-gradient(135deg, #f9ca24, #f0932b);
+  color: white;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-top: 5px;
+  font-weight: bold;
 }
 
 /* نشان‌های رژیمی */
 .badge {
-    display: inline-block;
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 12px;
-    margin-top: 4px;
-    margin-left: 4px;
-    font-weight: 500;
+  display: inline-block;
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-top: 4px;
+  margin-left: 4px;
+  font-weight: 500;
 }
-.badge-vegetarian { background-color: #e8f5e9; color: #2e7d32; }
-.badge-gluten_free { background-color: #f3e5f5; color: #6a1b9a; }
-.badge-nuts { background-color: #fff3e0; color: #e65100; }
-.badge-dairy { background-color: #e3f2fd; color: #1565c0; }
-.badge-spicy { background-color: #ffebee; color: #c62828; }
+
+.badge-vegetarian {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.badge-gluten_free {
+  background-color: #f3e5f5;
+  color: #6a1b9a;
+}
+
+.badge-nuts {
+  background-color: #fff3e0;
+  color: #e65100;
+}
+
+.badge-dairy {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.badge-spicy {
+  background-color: #ffebee;
+  color: #c62828;
+}
 
 /* برچسب‌های ویژه */
 .special-badge {
-    display: inline-block;
-    font-size: 10px;
-    padding: 2px 10px;
-    border-radius: 12px;
-    margin-top: 4px;
-    margin-left: 4px;
-    font-weight: bold;
-    color: white;
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 10px;
+  border-radius: 12px;
+  margin-top: 4px;
+  margin-left: 4px;
+  font-weight: bold;
+  color: white;
 }
 
 /* وضعیت موجودی */
 .stock-badge-unavailable {
-    background-color: #e53935;
-    color: white;
-    padding: 2px 10px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: bold;
-    display: inline-block;
-    margin-top: 4px;
+  background-color: #e53935;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 4px;
 }
+
 .stock-badge-limited {
-    background-color: #ff9800;
-    color: white;
-    padding: 2px 10px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: bold;
-    display: inline-block;
-    margin-top: 4px;
+  background-color: #ff9800;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 4px;
 }
+
 .stock-badge-preorder {
-    background-color: #2196F3;
-    color: white;
-    padding: 2px 10px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-weight: bold;
-    display: inline-block;
-    margin-top: 4px;
+  background-color: #2196F3;
+  color: white;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 4px;
 }
-/* ===== فیلتر قیمت ===== */
-.filter-badge.price-economic { border-color: #4CAF50; color: #4CAF50; }
-.filter-badge.price-economic.active { background: #4CAF50; border-color: #4CAF50; color: white; }
 
-.filter-badge.price-medium { border-color: #FF9800; color: #FF9800; }
-.filter-badge.price-medium.active { background: #FF9800; border-color: #FF9800; color: white; }
-
-.filter-badge.price-expensive { border-color: #e74c3c; color: #e74c3c; }
-.filter-badge.price-expensive.active { background: #e74c3c; border-color: #e74c3c; color: white; }
 /* ریسپانسیو */
 @media (max-width: 600px) {
-    .advanced-filters {
-        gap: 6px;
-        padding: 10px;
-        border-radius: 12px;
-    }
-    .filter-badge {
-        font-size: 12px;
-        padding: 6px 12px;
-    }
-    .filter-btn {
-        font-size: 13px;
-        padding: 6px 14px;
-    }
-    .menu-search-box {
-        max-width: 100%;
-        padding: 0 5px;
-    }
-    #menu-search {
-        padding: 10px 14px;
-        font-size: 13px;
-    }
+  .advanced-filters {
+    gap: 6px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .filter-badge {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .filter-btn {
+    font-size: 13px;
+    padding: 6px 14px;
+  }
+
+  .menu-search-box {
+    max-width: 100%;
+    padding: 0 5px;
+  }
+
+  #menu-search {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
 }
+
+/* .filter-btn:hover {
+background-color: #c0392b !important;
+border-color: blue !important;
+} */
+/* .filter-btn.active :nth-child(1){
+    background-color: red !important;
+    border-color: red !important;
+} */
+/* filter-btn active */
